@@ -562,6 +562,7 @@ bool LD2410Component::setbaudrate(uint8_t baudrate) {
   return false;
 }
 
+void Buttons::dump_config() { LOG_BUTTON(TAG, "Buttons Button", this);}
 void Buttons::press_action() {
   ESP_LOGD(TAG, "press_action %s, type_ %i", name_.c_str(), type_);
   switch (type_) {
@@ -580,7 +581,12 @@ void Buttons::press_action() {
       break;
   }
 }
-
+      
+void SelectBaudrate::setup() {
+  this->traits.set_options({"9600", "19200", "38400", "57600", "115200", "230400", "256000", "460800"});
+  this->publish_state(this->parent_->baud_rate.c_str()); 
+}
+void SelectBaudrate::dump_config() {LOG_SELECT(TAG, "DemoSelect Select", this);}
 void SelectBaudrate::control(const std::string &value) {
   this->publish_state(value);
 

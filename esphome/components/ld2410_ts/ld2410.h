@@ -238,7 +238,7 @@ class LD2410Component : public PollingComponent, public uart::UARTDevice {
 
 class Buttons : public Component, public button::Button {
   public:
-    void dump_config() override { LOG_BUTTON("", "Buttons Button", this); };
+    void dump_config() override;
     void set_parent(LD2410Component *parent) { this->parent_ = parent; }
     void set_type(eButtonType type) { type_ = type; }
   protected:
@@ -249,11 +249,8 @@ class Buttons : public Component, public button::Button {
 
 class SelectBaudrate : public select::Select, public Component {
   public:
-    void dump_config() override {
-      LOG_SELECT("", "DemoSelect Select", this);
-      this->traits.set_options({"9600", "19200", "38400", "57600", "115200", "230400", "256000", "460800"});
-    };
-    void setup() override { this->publish_state(this->parent_->baud_rate.c_str()); };
+    void dump_config() override;
+    void setup() override;
     void set_parent(LD2410Component *parent) { this->parent_ = parent; }
 
   protected:
